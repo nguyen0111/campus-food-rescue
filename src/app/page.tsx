@@ -13,6 +13,9 @@ const filterOptions = [
   { value: "co2", label: "Highest CO₂ Saved", icon: "🌱" },
   { value: "urgent", label: "Most Urgent Rescue", icon: "⏰" },
   { value: "vegan", label: "Vegan", icon: "🥗" },
+  { value: "vegetarian", label: "Vegetarian", icon: "🥬" },
+  { value: "gluten-free", label: "Gluten-Free", icon: "🌾" },
+  { value: "lactose-free", label: "Lactose-Free", icon: "🥛" },
 ];
 
 export default function Home() {
@@ -35,6 +38,15 @@ export default function Home() {
       case "vegan":
         result = result.filter((m) => m.isVegan);
         break;
+      case "vegetarian":
+        result = result.filter((m) => m.dietaryTags.includes("Vegetarian"));
+        break;
+      case "gluten-free":
+        result = result.filter((m) => m.dietaryTags.includes("Gluten-free"));
+        break;
+      case "lactose-free":
+        result = result.filter((m) => m.dietaryTags.includes("Lactose-free"));
+        break;
       case "latest":
       default:
         result.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
@@ -48,6 +60,7 @@ export default function Home() {
         (m) =>
           m.title.toLowerCase().includes(q) ||
           m.tags.some((t) => t.toLowerCase().includes(q)) ||
+          m.dietaryTags.some((t) => t.toLowerCase().includes(q)) ||
           m.ingredients.some((i) => i.toLowerCase().includes(q))
       );
     }

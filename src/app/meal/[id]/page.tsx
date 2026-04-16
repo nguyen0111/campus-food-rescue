@@ -3,7 +3,7 @@
 import BottomNav from "@/components/BottomNav";
 import { useApp } from "@/context/AppContext";
 import { getCanteenById, getMealById } from "@/lib/data";
-import { ArrowLeft, Clock, Leaf, Lock, MapPin, ShieldCheck, Tag, UtensilsCrossed } from "lucide-react";
+import { ArrowLeft, Leaf, Lock, MapPin, ShieldCheck, Snowflake, Tag, UtensilsCrossed } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -80,15 +80,15 @@ export default function MealDetailPage() {
 
       {/* Content */}
       <div className="px-5 pt-5 pb-52 max-w-lg mx-auto">
-        {/* Pickup Time Alert */}
+        {/* Locker Pickup Alert */}
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-3.5 flex items-start gap-3 mb-5">
-          <Clock size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
+          <Snowflake size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
           <div>
             <p className="font-semibold text-sm text-amber-800">
-              Pick up before {meal.pickupTime}
+              Locker Pickup available until {meal.pickupTime}
             </p>
             <p className="text-xs text-amber-600 mt-0.5">
-              Arrive on time — uncollected meals go to waste
+              Refrigerated lockers keep your meal fresh — pick up at your convenience
             </p>
           </div>
         </div>
@@ -125,6 +125,33 @@ export default function MealDetailPage() {
             ))}
           </div>
         </div>
+
+        {/* Dietary Tags */}
+        {meal.dietaryTags.length > 0 && (
+          <div className="mb-5">
+            <h3 className="font-semibold text-sm text-gray-900 mb-2">Dietary Info</h3>
+            <div className="flex flex-wrap gap-2">
+              {meal.dietaryTags.map((tag) => {
+                const styles: Record<string, { bg: string; text: string }> = {
+                  "Vegan": { bg: "bg-emerald-50", text: "text-emerald-600" },
+                  "Vegetarian": { bg: "bg-green-50", text: "text-green-600" },
+                  "Gluten-free": { bg: "bg-amber-50", text: "text-amber-600" },
+                  "Lactose-free": { bg: "bg-blue-50", text: "text-blue-600" },
+                  "Dairy-free": { bg: "bg-purple-50", text: "text-purple-600" },
+                };
+                const s = styles[tag] || { bg: "bg-gray-100", text: "text-gray-600" };
+                return (
+                  <span
+                    key={tag}
+                    className={`${s.bg} ${s.text} text-xs font-semibold px-3 py-1.5 rounded-full`}
+                  >
+                    {tag}
+                  </span>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Sticky Bottom Bar with Price Selection */}

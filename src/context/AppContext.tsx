@@ -3,7 +3,7 @@
 import { Guild, Order, OrderItem, UserProfile, getCanteenById, getMealById, guilds, initialProfile } from "@/lib/data";
 import React, { createContext, useCallback, useContext, useState } from "react";
 
-type FilterType = "latest" | "co2" | "urgent" | "vegan";
+type FilterType = "latest" | "co2" | "urgent" | "vegan" | "vegetarian" | "gluten-free" | "lactose-free";
 
 interface AppState {
   profile: UserProfile;
